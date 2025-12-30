@@ -1,351 +1,345 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Informasi Penyakit Ayam</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-    }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #43cea2, #185a9d);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .card {
-      background: #ffffff;
-      width: 90%;
-      max-width: 850px;
-      border-radius: 18px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-      padding: 25px 30px 35px;
-      animation: fadeIn 0.8s ease;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);} 
-      to {opacity: 1; transform: translateY(0);} 
-    }
-    header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    header h1 {
-      margin: 0;
-      color: #185a9d;
-      font-size: 26px;
-      letter-spacing: 1px;
-    }
-    header p {
-      margin: 5px 0 0;
-      font-weight: bold;
-      color: #555;
-    }
-    .menu {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 12px;
-      margin-top: 20px;
-    }
-    .menu button {
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      cursor: pointer;
-      color: #fff;
-      background: linear-gradient(135deg, #185a9d, #43cea2);
-      transition: all 0.25s ease;
-    }
-    .menu button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-    }
-    .menu .exit {
-      background: linear-gradient(135deg, #ff512f, #dd2476);
-    }
-    .output {
-      margin-top: 25px;
-      padding: 20px;
-      background: #f4f8fb;
-      border-radius: 14px;
-      display: none;
-      animation: fadeIn 0.5s ease;
-    }
-    .output h3 {
-      margin-top: 0;
-      color: #185a9d;
-    }
-    .output ul {
-      margin: 8px 0 15px 20px;
-    }
-    footer {
-      text-align: center;
-      margin-top: 25px;
-      font-size: 14px;
-      color: #777;
-    }
-    /* =========================
-   VERSI ANDROID / MOBILE
-   ========================= */
-@media (max-width: 768px) {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnosa Penyakit Ayam</title>
 
-  body {
-    padding: 15px;
-    align-items: flex-start;
-  }
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
 
-  .card {
-    width: 100%;
-    padding: 20px;
-    margin-top: 20px;
-  }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #43cea2, #185a9d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.card {
+  background: #fff;
+  width: 90%;
+  max-width: 900px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  padding: 25px 30px 35px;
+}
+
+/* ===== HEADER ===== */
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0;
+  color: #185a9d;
+}
+
+header p {
+  font-weight: bold;
+  color: #555;
+}
+
+/* ===== SECTION ===== */
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+/* ===== HOME ===== */
+.home, .gejala, .hasil-box {
+  background: #f4f8fb;
+  padding: 25px;
+  border-radius: 14px;
+}
+
+.home-content {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.home-left, .hasil-text {
+  flex: 1;
+}
+
+.home-left ul {
+  list-style: none;
+  padding: 0;
+  line-height: 1.9;
+}
+
+.home-right, .hasil-img {
+  flex: 1;
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* ===== GEJALA ===== */
+.gejala label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.gejala input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+/* ===== BUTTON ===== */
+button {
+  margin-top: 15px;
+  padding: 14px;
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(135deg, #185a9d, #43cea2);
+  position: relative;
+  z-index: 10;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+}
+
+/* ===== HASIL ===== */
+.hasil-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 30px;
+  border-left: 6px solid #43cea2;
+  flex-wrap: wrap;
+}
+
+.hasil-text h3 {
+  margin-top: 0;
+  color: #185a9d;
+}
+
+.hasil-text ul {
+  padding-left: 20px;
+  line-height: 1.8;
+}
+
+.hasil-img {
+  display: flex;
+  justify-content: center;
+}
+
+.hasil-img img {
+  max-width: 320px;
+  width: 100%;
+  border-radius: 14px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+  color: #777;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
   header h1 {
     font-size: 22px;
   }
 
-  header p {
-    font-size: 14px;
-  }
-
-  .menu {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .menu button {
-    font-size: 16px;
-    padding: 16px;
-  }
-
-  .output {
-    padding: 16px;
-  }
-
-  .output h3 {
-    font-size: 18px;
-  }
-
-  /* Gambar preview penyakit */
-  #imageBox img {
-    max-height: 220px;
-    object-fit: cover;
-  }
-
-  /* Tampilan anggota kelompok (stack vertikal) */
-  .output > div {
-    flex-direction: column !important;
+  .home-content,
+  .hasil-box {
+    flex-direction: column;
     text-align: center;
   }
 
-  .output ul {
+  .hasil-text ul {
     text-align: left;
-    font-size: 15px;
+    display: inline-block;
   }
 
-  /* Tombol kembali */
-  .output button {
-    width: 100%;
-    font-size: 16px;
+  .card {
+    padding: 20px;
   }
 }
-
-  </style>
-  
+</style>
 </head>
+
 <body>
-  <div class="card">
-    <header>
-      <h1>Program Informasi Penyakit Ayam</h1>
-      <p>Kelompok 2</p>
-    </header>
 
-   <div class="menu" id="menu">
-      <button onclick="tampil(1)">🐔 Flu Burung</button>
-      <button onclick="tampil(2)">🦠 Newcastle Disease</button>
-      <button onclick="tampil(3)">💨 CRD / Ngorok</button>
-      <button onclick="tampil(4)">🧫 Coccidiosis</button>
-      <button class="exit" onclick="tampil(5)">❌ Keluar</button>
-    </div>
+<div class="card">
 
-    <div class="output" id="output"></div>
+<header>
+  <h1>Diagnosa Penyakit Ayam</h1>
+  <p>KELOMPOK 2</p>
+</header>
 
-    <div class="output" id="imageBox" style="display:none; text-align:center; margin-top:15px;">
-      <p><b>Gambar Penyakit (Preview):</b></p>
-      <img id="imgPreview" src="" alt="Gambar penyakit ayam" style="max-width:100%; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.2);" />
-      <p style="font-size:13px; color:#666; margin-top:8px;">Gambar hanya sebagai referensi visual</p>
-    </div>
-
-    <footer>
-      EXPERT SYSTEM
-    </footer>
-  </div>
-
-  <script>
-    function tampil(pilihan) {
-      const o = document.getElementById('output');
-      o.style.display = 'block';
-
-      switch (pilihan) {
-        case 1:
-          o.innerHTML = `
-            <h3>Flu Burung (Avian Influenza)</h3>
-            <b>Gejala:</b>
-            <ul>
-              <li>Nafsu makan menurun</li>
-              <li>Batuk</li>
-              <li>Jengger kebiruan</li>
-              <li>Mati mendadak</li>
-            </ul>
-            <b>Pengobatan:</b>
-            <ul>
-              <li>Tidak ada obat khusus</li>
-              <li>Vaksinasi AI</li>
-              <li>Karantina & disinfeksi kandang</li>
-            </ul>`;
-          showImage('GAMBAR/FLU BURUNG/flu burung.jpeg');
-
-          break;
-
-        case 2:
-          o.innerHTML = `
-            <h3>Newcastle Disease (ND / Tetelo)</h3>
-            <b>Gejala:</b>
-            <ul>
-              <li>Batuk dan sesak napas</li>
-              <li>Leher terpuntir</li>
-              <li>Lumpuh</li>
-            </ul>
-            <b>Pengobatan:</b>
-            <ul>
-              <li>Vaksin ND rutin</li>
-              <li>Vitamin & elektrolit</li>
-              <li>Isolasi ayam sakit</li>
-            </ul>`;
-         showImage('GAMBAR/NEW CASTLE DISEASE/newcastle.jpeg');
-            break;
-
-        case 3:
-          o.innerHTML = `
-            <h3>Chronic Respiratory Disease (CRD)</h3>
-            <b>Gejala:</b>
-            <ul>
-              <li>Ngorok</li>
-              <li>Napas berbunyi</li>
-              <li>Lendir hidung</li>
-            </ul>
-            <b>Pengobatan:</b>
-            <ul>
-              <li>Antibiotik (Tylosin, Doxycycline)</li>
-              <li>Ventilasi kandang baik</li>
-            </ul>`;
-          showImage('GAMBAR/CRD NGOROK/crd ngorok.jpeg');
-          break;
-
-        case 4:
-          o.innerHTML = `
-            <h3>Coccidiosis (Koksidiosis)</h3>
-            <b>Gejala:</b>
-            <ul>
-              <li>Diare berdarah</li>
-              <li>Bulu kusam</li>
-              <li>Ayam lemas</li>
-            </ul>
-            <b>Pengobatan:</b>
-            <ul>
-              <li>Obat anti-koksidia</li>
-              <li>Kandang kering & bersih</li>
-            </ul>`;
-          showImage('GAMBAR/COCCIDIOSIS/coccidiosis.jpeg');
-
-          break;
-
-   case 5:
-  document.getElementById('menu').style.display = 'none';
-  document.getElementById('imageBox').style.display = 'none';
-
-  o.innerHTML = `
-    <h3 style="text-align:center; margin-bottom:20px;">
-      👥 Anggota Kelompok 2
-    </h3>
-
-    <div style="
-      display:flex;
-      gap:25px;
-      align-items:center;
-      flex-wrap:wrap;
-    ">
-
-      <!-- KIRI : NAMA & NIM -->
-      <div style="flex:1; min-width:250px;">
-        <ul style="list-style:none; padding:0; font-size:16px; line-height:1.8;">
+<!-- HOME -->
+<div class="section active" id="halamanHome">
+  <div class="home">
+    <div class="home-content">
+      <div class="home-left">
+        <h3>Anggota Kelompok 2</h3>
+        <ul>
           <li>👤 ABDUL ROFI'<br><small>NIM: 23104420015</small></li>
           <li>👤 Rizka Alfiyanti<br><small>NIM: 23104420017</small></li>
           <li>👤 Fahriza Andika<br><small>NIM: 23104420020</small></li>
           <li>👤 Ahmad Haidir<br><small>NIM: 23104420024</small></li>
         </ul>
+        <button type="button" onclick="pindahHalaman('halamanDiagnosa')">
+          🐔 Menu Diagnosa
+        </button>
       </div>
-
-      <!-- KANAN : GAMBAR -->
-      <div style="flex:1; min-width:250px; text-align:center;">
-        <img 
-          src="GAMBAR/KELOMPOK/kelompok2.jpg"
-          alt="Foto Kelompok 2"
-          style="
-            max-width:100%;
-            border-radius:14px;
-            box-shadow:0 10px 25px rgba(0,0,0,0.25);
-          "
-        >
+      <div class="home-right">
+        <img src="GAMBAR/KELOMPOK/kelompok2.jpg">
       </div>
-
     </div>
-
-    <hr style="margin-top:35px; opacity:0.3;">
-<p style="text-align:center; margin-top:40px; font-size:14px; color:#555;">
-  Terima kasih telah menggunakan program ini 🙏
-</p>
-
-<div style="text-align:center; margin-top:20px;">
-  <button 
-    onclick="kembaliMenu()"
-    style="
-      padding:12px 22px;
-      border:none;
-      border-radius:12px;
-      cursor:pointer;
-      font-size:15px;
-      color:#fff;
-      background: linear-gradient(135deg, #43cea2, #185a9d);
-      box-shadow:0 6px 15px rgba(0,0,0,0.2);
-    ">
-    Kembali Ke Menu Utama
-  </button>
+  </div>
 </div>
-  `;
-  break;
-  
 
-      }
-      
-    }
-    
-  function showImage(src) {
-      const box = document.getElementById('imageBox');
-      const img = document.getElementById('imgPreview');
-      box.style.display = 'block';
-      img.src = src;
-    }
-    function kembaliMenu() {
-  document.getElementById('menu').style.display = 'grid';
-  document.getElementById('output').style.display = 'none';
-  document.getElementById('imageBox').style.display = 'none';
+<!-- DIAGNOSA -->
+<div class="section" id="halamanDiagnosa">
+  <div class="gejala">
+    <h3>Pilih Gejala Ayam:</h3>
+    <label><input type="checkbox" id="g1"> Nafsu makan menurun</label>
+    <label><input type="checkbox" id="g2"> Batuk / sesak napas</label>
+    <label><input type="checkbox" id="g3"> Jengger kebiruan</label>
+    <label><input type="checkbox" id="g4"> Mati mendadak</label>
+    <label><input type="checkbox" id="g5"> Leher terpuntir / lumpuh</label>
+    <label><input type="checkbox" id="g6"> Ngorok</label>
+    <label><input type="checkbox" id="g7"> Diare berdarah</label>
+
+    <button type="button" onclick="diagnosa()">Proses Diagnosa</button>
+    <button type="button" onclick="pindahHalaman('halamanHome')">⬅ Kembali</button>
+  </div>
+</div>
+
+<!-- HASIL -->
+<div class="section" id="halamanHasil">
+  <div class="hasil-box">
+    <div class="hasil-text" id="hasilText"></div>
+    <div class="hasil-img">
+      <img id="hasilGambar">
+    </div>
+  </div>
+  <button type="button" onclick="kembaliHome()">⬅ Menu Utama</button>
+</div>
+
+<footer>EXPERT SYSTEM</footer>
+
+</div>
+
+<script>
+function g(id) {
+  return document.getElementById(id).checked;
 }
-  </script>
+
+function diagnosa() {
+  const gejala = {
+    g1: g("g1"),
+    g2: g("g2"),
+    g3: g("g3"),
+    g4: g("g4"),
+    g5: g("g5"),
+    g6: g("g6"),
+    g7: g("g7")
+  };
+
+  const dataPenyakit = [
+    {
+      nama: "Flu Burung",
+      gejala: ["g1", "g2", "g3", "g4"],
+      solusi: ["Karantina", "Disinfeksi", "Vaksin AI"],
+      gambar: "GAMBAR/FLU BURUNG/flu burung.jpeg"
+    },
+    {
+      nama: "Newcastle Disease",
+      gejala: ["g2", "g5"],
+      solusi: ["Vaksin ND", "Vitamin"],
+      gambar: "GAMBAR/NEW CASTLE DISEASE/newcastle.jpeg"
+    },
+    {
+      nama: "CRD (Ngorok)",
+      gejala: ["g2", "g6"],
+      solusi: ["Antibiotik", "Ventilasi baik"],
+      gambar: "GAMBAR/CRD NGOROK/crd ngorok.jpeg"
+    },
+    {
+      nama: "Coccidiosis",
+      gejala: ["g7"],
+      solusi: ["Anti koksidia", "Kandang kering"],
+      gambar: "GAMBAR/COCCIDIOSIS/coccidiosis.jpeg"
+    }
+  ];
+
+  let terbaik = null;
+  let skorMax = 0;
+
+  dataPenyakit.forEach(p => {
+    let skor = 0;
+    p.gejala.forEach(gj => {
+      if (gejala[gj]) skor++;
+    });
+
+    if (skor > skorMax) {
+      skorMax = skor;
+      terbaik = p;
+    }
+  });
+
+  if (terbaik && skorMax > 0) {
+    let solusiHTML = terbaik.solusi.map(s => `<li>${s}</li>`).join("");
+    document.getElementById("hasilText").innerHTML = `
+      <h3>Terdeteksi Penyakit ${terbaik.nama}</h3>
+      <p><b>Kecocokan:</b> ${skorMax} gejala</p>
+      <ul>${solusiHTML}</ul>
+    `;
+    document.getElementById("hasilGambar").src = terbaik.gambar;
+  } else {
+    document.getElementById("hasilText").innerHTML = `
+      <h3>Penyakit Tidak Terdeteksi</h3>
+      <p>Gejala belum cukup.</p>
+    `;
+    document.getElementById("hasilGambar").src = "GAMBAR/info.png";
+  }
+
+  pindahHalaman("halamanHasil");
+}
+
+function pindahHalaman(id) {
+  document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function kembaliHome() {
+  pindahHalaman("halamanHome");
+  document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+}
+</script>
+
 </body>
 </html>
