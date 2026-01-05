@@ -259,7 +259,8 @@ function g(id) {
 }
 
 function diagnosa() {
-  const gejala = {
+
+  const fakta = {
     g1: g("g1"),
     g2: g("g2"),
     g3: g("g3"),
@@ -269,60 +270,98 @@ function diagnosa() {
     g7: g("g7")
   };
 
-  const dataPenyakit = [
+  const namaGejala = {
+    g1: "Nafsu makan menurun",
+    g2: "Batuk / sesak napas",
+    g3: "Jengger kebiruan",
+    g4: "Mati mendadak",
+    g5: "Leher terpuntir / lumpuh",
+    g6: "Ngorok",
+    g7: "Diare berdarah"
+  };
+
+  const rules = [
     {
-      nama: "Flu Burung",
-      gejala: ["g1", "g2", "g3", "g4"],
-      solusi: ["Karantina", "Disinfeksi", "Vaksin AI"],
-      gambar: "GAMBAR/FLU BURUNG/flu burung.jpeg"
+      if: ["g1", "g2", "g3", "g4"],
+      then: {
+        nama: "Flu Burung",
+        solusi: ["Karantina", "Disinfeksi", "Vaksin AI"],
+        gambar: "GAMBAR/FLU BURUNG/flu burung.jpeg"
+      }
     },
     {
-      nama: "Newcastle Disease",
-      gejala: ["g2", "g5"],
-      solusi: ["Vaksin ND", "Vitamin"],
-      gambar: "GAMBAR/NEW CASTLE DISEASE/newcastle.jpeg"
+      if: ["g2", "g5"],
+      then: {
+        nama: "Newcastle Disease",
+        solusi: ["Vaksin ND", "Vitamin"],
+        gambar: "GAMBAR/NEW CASTLE DISEASE/newcastle.jpeg"
+      }
     },
     {
-      nama: "CRD (Ngorok)",
-      gejala: ["g2", "g6"],
-      solusi: ["Antibiotik", "Ventilasi baik"],
-      gambar: "GAMBAR/CRD NGOROK/crd ngorok.jpeg"
+      if: ["g2", "g6"],
+      then: {
+        nama: "CRD (Ngorok)",
+        solusi: ["Antibiotik", "Ventilasi baik"],
+        gambar: "GAMBAR/CRD NGOROK/crd ngorok.jpeg"
+      }
     },
     {
-      nama: "Coccidiosis",
-      gejala: ["g7"],
-      solusi: ["Anti koksidia", "Kandang kering"],
-      gambar: "GAMBAR/COCCIDIOSIS/coccidiosis.jpeg"
+      if: ["g7"],
+      then: {
+        nama: "Coccidiosis",
+        solusi: ["Anti koksidia", "Kandang kering"],
+        gambar: "GAMBAR/COCCIDIOSIS/coccidiosis.jpeg"
+      }
     }
   ];
 
-  let terbaik = null;
-  let skorMax = 0;
+  let hasil = null;
+  let jumlahTerpenuhi = 0;
+  let totalGejala = 0;
+  let daftarGejalaTerpenuhi = [];
 
-  dataPenyakit.forEach(p => {
-    let skor = 0;
-    p.gejala.forEach(gj => {
-      if (gejala[gj]) skor++;
-    });
+  for (let rule of rules) {
+    let terpenuhi = true;
+    let hitung = 0;
+    let tempGejala = [];
 
-    if (skor > skorMax) {
-      skorMax = skor;
-      terbaik = p;
+    for (let gejala of rule.if) {
+      if (fakta[gejala]) {
+        hitung++;
+        tempGejala.push(namaGejala[gejala]);
+      } else {
+        terpenuhi = false;
+        break;
+      }
     }
-  });
 
-  if (terbaik && skorMax > 0) {
-    let solusiHTML = terbaik.solusi.map(s => `<li>${s}</li>`).join("");
+    if (terpenuhi) {
+      hasil = rule.then;
+      jumlahTerpenuhi = hitung;
+      totalGejala = rule.if.length;
+      daftarGejalaTerpenuhi = tempGejala;
+      break; // stop setelah aturan terpenuhi
+    }
+  }
+
+  // Tampilkan hasil
+  if (hasil) {
+    let solusiHTML = hasil.solusi.map(s => `<li>${s}</li>`).join("");
+    let gejalaHTML = daftarGejalaTerpenuhi.map(g => `<li>${g}</li>`).join("");
+
     document.getElementById("hasilText").innerHTML = `
-      <h3>Terdeteksi Penyakit ${terbaik.nama}</h3>
-      <p><b>Kecocokan:</b> ${skorMax} gejala</p>
+      <h3>Terdeteksi Penyakit ${hasil.nama}</h3>
+      <p><b>Jumlah Gejala Terpenuhi:</b> ${jumlahTerpenuhi} dari ${totalGejala}</p>
+      <p><b>Daftar Gejala:</b></p>
+      <ul>${gejalaHTML}</ul>
+      <p><b>Solusi Penanganan:</b></p>
       <ul>${solusiHTML}</ul>
     `;
-    document.getElementById("hasilGambar").src = terbaik.gambar;
+    document.getElementById("hasilGambar").src = hasil.gambar;
   } else {
     document.getElementById("hasilText").innerHTML = `
       <h3>Penyakit Tidak Terdeteksi</h3>
-      <p>Gejala belum cukup.</p>
+      <p>Tidak ada aturan yang terpenuhi.</p>
     `;
     document.getElementById("hasilGambar").src = "GAMBAR/info.png";
   }
